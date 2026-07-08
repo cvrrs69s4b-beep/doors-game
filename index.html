@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Choose a Door</title>
+<style>
+body{font-family:Arial;text-align:center;margin-top:50px;}
+button{padding:15px 30px;margin:10px;font-size:18px;}
+</style>
+</head>
+<body>
+
+<h1>Choose a Door</h1>
+
+<div id="game">
+<button onclick="pick(1)">Door 1</button>
+<button onclick="pick(2)">Door 2</button>
+<button onclick="pick(3)">Door 3</button>
+</div>
+
+<script>
+let prize=Math.floor(Math.random()*3)+1;
+let choice;
+
+function pick(d){
+choice=d;
+
+let open=[1,2,3].filter(x=>x!==choice&&x!==prize);
+let opened=open[Math.floor(Math.random()*open.length)];
+
+let remain=[1,2,3].find(x=>x!==choice&&x!==opened);
+
+document.getElementById("game").innerHTML=`
+<h2>Door ${opened} is EMPTY!</h2>
+<p>Do you want to change your choice?</p>
+<button onclick="finish(${choice})">Keep Door ${choice}</button>
+<button onclick="finish(${remain})">Switch to Door ${remain}</button>
+`;
+}
+
+function finish(finalChoice){
+let msg=finalChoice===prize?
+"🎉 Congratulations! You won the prize!":
+"❌ Sorry, you lost.";
+
+document.getElementById("game").innerHTML=`
+<h2>The prize was behind Door ${prize}</h2>
+<h1>${msg}</h1>
+`;
+}
+</script>
+
+</body>
+</html>
